@@ -207,3 +207,26 @@ Possible future additions include:
 - Defender for Cloud
 - GitHub Actions CI/CD
 - Azure DevOps Pipeline
+
+## Terraform Backend
+
+Terraform remote state will use an Azure Storage Account located in the Management subscription.
+
+The backend will use:
+
+- Azure Resource Group
+- Azure Storage Account
+- Blob Container
+- Separate state files per deployment
+
+## Terraform Authentication
+
+Initial local Terraform execution will use Azure CLI authentication.
+
+Future automated deployments should use managed identity or workload identity federation instead of storing long-lived secrets.
+
+Authentication strategy:
+
+```text
+Local Development      -> Azure CLI authentication
+Automation / Pipeline  -> Managed Identity or Workload Identity
