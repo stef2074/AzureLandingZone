@@ -129,7 +129,7 @@ Once complete, all remaining deployments will use the remote backend.
 
 ---
 
-# Design Principles
+# Engineering Principles
 
 This project follows the following principles:
 
@@ -141,6 +141,34 @@ This project follows the following principles:
 - Reusable modules
 - Incremental development
 - Documentation before implementation
+
+## Terraform Naming Convention
+
+Terraform resource names describe the **role** of the resource rather than the Azure resource type or implementation detail.
+
+Good examples:
+
+```hcl
+resource "azurerm_resource_group" "backend" {}
+
+resource "azurerm_virtual_network" "hub" {}
+
+resource "azurerm_virtual_network" "development" {}
+
+resource "azurerm_log_analytics_workspace" "monitoring" {}
+```
+
+Avoid generic or implementation-based names such as:
+
+```hcl
+resource "azurerm_resource_group" "rg1" {}
+
+resource "azurerm_storage_account" "tfstate" {}
+
+resource "azurerm_virtual_network" "vnet1" {}
+```
+
+The goal is to make Terraform code read naturally and clearly communicate the purpose of each resource.
 
 ---
 
@@ -208,25 +236,39 @@ Possible future additions include:
 - GitHub Actions CI/CD
 - Azure DevOps Pipeline
 
-## Terraform Backend
-
-Terraform remote state will use an Azure Storage Account located in the Management subscription.
-
-The backend will use:
-
-- Azure Resource Group
-- Azure Storage Account
-- Blob Container
-- Separate state files per deployment
+---
 
 ## Terraform Authentication
 
-Initial local Terraform execution will use Azure CLI authentication.
+Initial local Terraform execution uses Azure CLI authentication.
 
-Future automated deployments should use managed identity or workload identity federation instead of storing long-lived secrets.
+Future automated deployments should use Managed Identity or Workload Identity Federation instead of long-lived credentials.
 
 Authentication strategy:
 
 ```text
 Local Development      -> Azure CLI authentication
-Automation / Pipeline  -> Managed Identity or Workload Identity
+Automation / Pipeline  -> Managed Identity / Workload Identity
+```
+
+---
+
+## Additional Engineering Principles
+
+- Prefer explicit, readable Terraform over clever or highly condensed configurations.
+- Optimize for maintainability over minimal code.
+- One deployment owns one responsibility.
+- Commit one logical change at a time with clear commit messages.
+
+---
+
+## Decision 007
+
+Terraform resource names should describe the **role** of the resource (for example, `backend`, `hub`, `monitoring`) rather than generic or implementation-specific names.
+
+---
+
+## Decision 008
+
+The bootstrap deployment owns only the Terraform backend infrastructure (Resource Group, Storage Account, and Blob Container). All other Azure resources are deployed by their respective deployments.
+
