@@ -141,6 +141,7 @@ This project follows the following principles:
 - Reusable modules
 - Incremental development
 - Documentation before implementation
+- Be explicit when it improves safety
 
 ## Terraform Naming Convention
 
@@ -272,3 +273,13 @@ Terraform resource names should describe the **role** of the resource (for examp
 
 The bootstrap deployment owns only the Terraform backend infrastructure (Resource Group, Storage Account, and Blob Container). All other Azure resources are deployed by their respective deployments.
 
+## Cost Philosophy
+
+The Azure Landing Zone is designed to minimize development costs while following production engineering practices.
+
+Where appropriate:
+
+- Prefer low-cost Azure SKUs during development.
+- Deploy only the resources required for the current module.
+- Make high-cost services optional.
+- Destroy unused resources when not actively testing.

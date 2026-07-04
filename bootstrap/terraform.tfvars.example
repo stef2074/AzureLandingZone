@@ -1,0 +1,3 @@
+management_subscription_id = "<AZURE_SUBSCRIPTION_ID>"
+location                   = "eastus2"
+storage_account_name       = "<UNIQUE_STORAGE_ACCOUNT_NAME>"
