@@ -12,6 +12,9 @@ crash.*.log
 # Plan files
 *.tfplan
 
+# Local backend configuration
+backend.tf
+
 # IDEs
 .vscode/
 .idea/
