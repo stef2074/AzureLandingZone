@@ -44,3 +44,9 @@ terraform init -migrate-state
 ```
 
 Terraform will migrate the local state file into the Azure Storage Account.
+
+## License
+
+This project is licensed under the MIT License.
+
+See the [LICENSE](../LICENSE) file for the complete license text.
