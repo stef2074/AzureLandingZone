@@ -34,3 +34,13 @@ az login
 ```
 
 Future automation will use Azure Workload Identity (OIDC) or Managed Identity rather than stored credentials.
+
+## Backend Migration
+
+After deploying the bootstrap infrastructure, configure the remote backend:
+
+```bash
+terraform init -migrate-state
+```
+
+Terraform will migrate the local state file into the Azure Storage Account.
