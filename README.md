@@ -1,24 +1,71 @@
 # Azure Landing Zone
 
-This repository contains the Terraform code used to deploy an Azure Landing Zone following Microsoft's Cloud Adoption Framework.
+This repository contains the Terraform code used to deploy an Azure Landing Zone following Microsoft's Cloud Adoption Framework (CAF).
 
-## Architecture
+The project is being developed incrementally, with each feature implemented, documented, tested, and version controlled before moving to the next phase.
 
-- Platform
-  - Management
-  - Connectivity
-- LandingZones
-  - Development
+## Objectives
+
+- Build an Azure Landing Zone using Terraform.
+- Follow Infrastructure as Code (IaC) best practices.
+- Implement Microsoft's Cloud Adoption Framework.
+- Deploy all infrastructure through Terraform.
+- Maintain a secure, modular, and reusable codebase.
+
+## Current Status
+
+**Note**
+
+This repository is under active development. Features are implemented incrementally using feature branches, peer review, and documented engineering practices.
+
+### Completed
+
+- Bootstrap Terraform backend
+- Azure Storage remote state
+- Project architecture documentation
+- Engineering principles
+- Repository structure
+
+### Planned
+
+- Management Groups
+- Platform Connectivity
+- Shared Services
+- Networking
+- Landing Zones
+- Monitoring
+- Governance
+
+## Repository Structure
+
+```text
+AzureLandingZone/
+├── bootstrap/            Terraform backend bootstrap
+├── docs/                 Architecture and engineering documentation
+├── landing-zones/        Landing Zone deployments
+├── management-groups/    Management Group hierarchy
+├── modules/              Reusable Terraform modules
+├── platform/             Platform infrastructure
+├── scripts/              Automation scripts
+└── shared/               Shared configuration
+```
 
 ## Technologies
 
 - Terraform
-- Azure
+- Microsoft Azure
+- Azure CLI
 - Git
+- GitHub
 
-## Goals
+## Documentation
 
-- Build an Azure Landing Zone using Terraform
-- Follow Infrastructure as Code best practices
-- Implement Microsoft's Cloud Adoption Framework
-- Deploy all infrastructure through Terraform
+Project documentation is located in the `docs` directory.
+
+Each deployment module also contains its own README describing its purpose, prerequisites, and deployment process.
+
+## License
+
+This project is licensed under the MIT License.
+
+See the [LICENSE](LICENSE) file for details.
