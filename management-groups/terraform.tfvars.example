@@ -1,0 +1,2 @@
+management_subscription_id = "<AZURE_SUBSCRIPTION_ID>"
+tenant_root_group_id       = "<TENANT_ROOT_MANAGEMENT_GROUP_ID>"

@@ -1,12 +1,12 @@
 # Engineering Principles
 
-This document defines the engineering standards used throughout the Azure Landing Zone project. These principles are intended to promote consistency, readability, maintainability, and long-term sustainability.
+This document defines the engineering standards used throughout the Azure Landing Zone project. These principles promote consistency, readability, maintainability, and long-term sustainability.
 
 Engineering principles describe **how** infrastructure is built. Architectural decisions are documented separately in `architecture.md`.
 
 ---
 
-# Comments
+## Code Documentation
 
 Comments should explain **why**, not **what**.
 
@@ -22,7 +22,7 @@ Avoid comments that merely restate what the Terraform configuration already expr
 
 Good comments provide context that cannot be inferred directly from the code.
 
-## Good Examples
+### Good Examples
 
 ```hcl
 # Explicitly specify the Management subscription to prevent
@@ -39,7 +39,7 @@ provider "azurerm" {
 name = var.storage_account_name
 ```
 
-## Avoid
+### Avoid
 
 ```hcl
 # Create a Resource Group.
@@ -51,12 +51,13 @@ resource "azurerm_resource_group" "backend" {
 location = var.location
 ```
 
-# Configuration
+---
+
+## Configuration Management
 
 Separate Terraform configuration from environment-specific values.
 
-Terraform configuration should define the infrastructure to be deployed.
-Environment-specific values should be supplied through variables.
+Terraform configuration defines the desired infrastructure. Environment-specific values should be supplied through variables, local configuration files, or the deployment pipeline.
 
 Examples include:
 
@@ -67,36 +68,96 @@ Examples include:
 
 Avoid hard-coding environment-specific values directly in Terraform configuration.
 
-# Resource References
+Follow these patterns consistently:
 
-When a Terraform resource depends on another managed resource, reference the managed resource rather than repeating its input variables.
+- Commit example/template files (for example, `terraform.tfvars.example` and `backend.tf.example`).
+- Keep environment-specific files local or provide them through the CI/CD pipeline.
+- Never commit secrets, credentials, or Terraform state.
 
-Good:
+---
+
+## Resource References
+
+- When a Terraform resource depends on another managed resource, reference the managed resource rather than repeating its input variables.
+- Prefer Terraform resource attributes (for example, `.id` or `.name`) over manually constructing Azure resource identifiers whenever possible.
+
+Referencing managed resources makes dependencies explicit, improves readability, and reduces the risk of configuration drift.
+
+### Good
 
 ```hcl
 resource_group_name = azurerm_resource_group.backend.name
 location            = azurerm_resource_group.backend.location
 ```
 
-Avoid:
+### Avoid
 
 ```hcl
 resource_group_name = var.resource_group_name
 location            = var.location
 ```
 
-Referencing managed resources makes dependencies explicit, improves readability, and reduces the risk of configuration drift.
+---
 
-# Validation
+## Validation & Deployment
 
 Validate infrastructure before deployment.
 
 Every logical change should follow this workflow:
 
-1. Write
-2. terraform fmt
-3. terraform validate
-4. terraform plan
-5. terraform apply
+1. Implement the change.
+2. Run `terraform fmt`.
+3. Run `terraform validate`.
+4. Review `terraform plan`.
+5. Apply the change with `terraform apply` when appropriate.
 
-Infrastructure should never be applied without first reviewing the execution plan.
+Infrastructure should never be applied without reviewing the execution plan.
+
+---
+
+## Git Workflow
+
+All development should be performed using feature branches.
+
+Recommended workflow:
+
+1. Create a Jira feature.
+2. Create a Git feature branch.
+3. Implement the feature.
+4. Validate the Terraform configuration.
+5. Commit using meaningful commit messages that reference the Jira ticket.
+6. Merge into `main`.
+7. Push changes to GitHub.
+8. Create Git tags for significant project milestones.
+
+Commit messages should clearly describe the purpose of the change rather than the files modified.
+
+---
+
+## Jira Workflow
+
+Every feature should be planned before implementation.
+
+Each Jira feature should include:
+
+- **Description** – Explains the purpose of the feature and the problem it solves.
+- **Objectives** – Defines the desired outcomes.
+- **Acceptance Criteria** – Specifies the conditions required for completion.
+- **Technical Notes** *(optional)* – Records implementation decisions, dependencies, or architectural considerations.
+- **Out of Scope** *(optional)* – Identifies work intentionally excluded from the feature.
+
+Well-defined Jira features reduce scope creep, improve consistency, and establish clear expectations before implementation begins.
+
+---
+
+## Documentation
+
+Documentation should evolve with the implementation. Architectural decisions, engineering practices, and module documentation should be updated as features are implemented.
+
+The repository should include:
+
+- Project documentation
+- Architecture documentation
+- Engineering principles
+- Module-specific README files
+
