@@ -78,7 +78,10 @@ Follow these patterns consistently:
 
 ## Resource References
 
-When a Terraform resource depends on another managed resource, reference the managed resource rather than repeating its input variables.
+- When a Terraform resource depends on another managed resource, reference the managed resource rather than repeating its input variables.
+- Prefer Terraform resource attributes (for example, `.id` or `.name`) over manually constructing Azure resource identifiers whenever possible.
+
+Referencing managed resources makes dependencies explicit, improves readability, and reduces the risk of configuration drift.
 
 ### Good
 
@@ -93,8 +96,6 @@ location            = azurerm_resource_group.backend.location
 resource_group_name = var.resource_group_name
 location            = var.location
 ```
-
-Referencing managed resources makes dependencies explicit, improves readability, and reduces the risk of configuration drift.
 
 ---
 
