@@ -125,7 +125,7 @@ Recommended workflow:
 2. Create a Git feature branch.
 3. Implement the feature.
 4. Validate the Terraform configuration.
-5. Commit using meaningful commit messages that reference the Jira ticket.
+5. Commit using meaningful commit messages that clearly describe the purpose of the change. Use the Jira feature identifier for feature work and descriptive prefixes (for example, `Docs:`, `Fix:`, or `Refactor:`) for non-feature commits.
 6. Merge into `main`.
 7. Push changes to GitHub.
 8. Create Git tags for significant project milestones.
