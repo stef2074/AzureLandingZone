@@ -1,36 +1,16 @@
 # Bootstrap
 
-## Purpose
-
-Creates the Terraform backend used by all Azure Landing Zone deployments.
+Creates the Terraform backend infrastructure used by all Azure Landing Zone deployments. This module establishes the remote backend required before any additional infrastructure is deployed.
 
 ## Resources
 
-Creates the following Azure resources:
+The following resources are created:
 
 - Resource Group
 - Storage Account
 - Blob Container
 
-## Terraform State
-
-The bootstrap deployment initially uses local Terraform state to create the Azure Storage backend.
-
-After the backend infrastructure has been successfully deployed, migrate the Terraform state to the Azure Storage backend:
-
-```bash
-terraform init -migrate-state
-```
-
-After the migration completes, all subsequent Terraform operations use the remote backend stored in Azure Storage.
-
-## Creates
-
-- Remote backend infrastructure
-
-## Does Not Create
-
-The bootstrap deployment does **not** create any Azure Landing Zone resources, including:
+This module creates only the Terraform backend infrastructure. It does **not** create Azure Landing Zone resources such as:
 
 - Management Groups
 - Networking
@@ -41,26 +21,34 @@ The bootstrap deployment does **not** create any Azure Landing Zone resources, i
 
 Before running Terraform:
 
-- Install Terraform.
-- Install the Azure CLI.
+- Ensure Terraform is installed.
+- Ensure the Azure CLI is installed.
 - Authenticate to Azure:
 
-```bash
+``` bash
 az login
 ```
 
-- Copy `terraform.tfvars.example` to `terraform.tfvars`.
 - Copy `backend.tf.example` to `backend.tf`.
+- Copy `terraform.tfvars.example` to `terraform.tfvars`.
 - Update both files with values appropriate for your Azure environment.
 
-## Authentication
+## Deployment
 
-Local development uses Azure CLI authentication.
+1. Run:
 
-Future automation should use Azure Workload Identity (OIDC) or Managed Identity instead of stored credentials.
+``` bash
+terraform init
+terraform plan
+terraform apply
+```
 
-## License
+2. After the backend infrastructure has been successfully deployed, migrate the Terraform state:
 
-This project is licensed under the MIT License.
+``` bash
+terraform init -migrate-state
+```
 
-See the [LICENSE](../LICENSE) file for the complete license text.
+## Terraform State
+
+This module initially uses local Terraform state to create the Azure Storage backend. After the migration completes, all subsequent Terraform operations use the remote backend stored in Azure Storage.

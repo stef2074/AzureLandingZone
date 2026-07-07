@@ -161,3 +161,16 @@ The repository should include:
 - Engineering principles
 - Module-specific README files
 
+### Module Documentation
+
+Each Terraform root module should include a `README.md`.
+
+Every module README should follow the standard structure:
+
+- Purpose
+- Resources
+- Prerequisites
+- Deployment
+- Terraform State
+
+Module documentation should describe the module's responsibilities, deployment process, and Terraform state management while maintaining a consistent format across the repository.
