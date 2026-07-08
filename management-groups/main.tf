@@ -35,4 +35,19 @@ resource "azurerm_management_group" "development" {
   parent_management_group_id = azurerm_management_group.landing_zones.id
 }
 
+# Subscription Assignment
 
+resource "azurerm_management_group_subscription_association" "management" {
+  management_group_id = azurerm_management_group.management.id
+  subscription_id     = "/subscriptions/${var.management_subscription_id}"
+}
+
+resource "azurerm_management_group_subscription_association" "connectivity" {
+  management_group_id = azurerm_management_group.connectivity.id
+  subscription_id     = "/subscriptions/${var.connectivity_subscription_id}"
+}
+
+resource "azurerm_management_group_subscription_association" "development" {
+  management_group_id = azurerm_management_group.development.id
+  subscription_id     = "/subscriptions/${var.development_subscription_id}"
+}

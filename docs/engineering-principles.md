@@ -113,6 +113,8 @@ Every logical change should follow this workflow:
 
 Infrastructure should never be applied without reviewing the execution plan.
 
+When introducing a new implementation pattern, validate it with a single representative resource before applying the same pattern more broadly. Once the implementation has been verified and `terraform plan` reports no changes, the pattern may be repeated for similar resources.
+
 ---
 
 ## Git Workflow

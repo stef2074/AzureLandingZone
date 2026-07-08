@@ -4,13 +4,21 @@ Deploys the Azure Management Group hierarchy for the Azure Landing Zone, establi
 
 ## Resources
 
-The following resources are created:
+The following resources are managed by this module:
+
+### Management Groups
 
 - Platform
   - Management
   - Connectivity
 - Landing Zones
   - Development
+
+### Subscription Assignments
+
+- Management
+- Connectivity
+- Development
 
 The Tenant Root Management Group is treated as an existing Azure resource and is not created by this module.
 

@@ -25,10 +25,11 @@ This repository is under active development. Features are implemented incrementa
 - Project architecture documentation
 - Engineering principles
 - Repository structure
+- Azure Management Group hierarchy
+- Azure subscription placement
 
 ### Planned
 
-- Management Groups
 - Platform Connectivity
 - Shared Services
 - Networking
