@@ -8,20 +8,20 @@ The repository is organized into independent deployment units. Each deployment o
 
 ---
 
-# Management Group Hierarchy
+## Management Group Hierarchy
 
 ```text
 Tenant Root
 ├── Platform
 │   ├── Management
 │   └── Connectivity
-└── LandingZones
+└── Landing Zones
     └── Development
 ```
 
 ---
 
-# Subscriptions
+## Subscriptions
 
 | Subscription | Purpose |
 |---------------|---------|
@@ -31,7 +31,24 @@ Tenant Root
 
 ---
 
-# Repository Structure
+## Platform Connectivity
+
+The Connectivity subscription hosts the Hub Virtual Network that provides the networking foundation for the Azure Landing Zone.
+
+```text
+Connectivity Subscription
+└── Hub Virtual Network (10.100.0.0/16)
+    ├── GatewaySubnet (10.100.0.0/24)
+    └── SharedServicesSubnet (10.100.1.0/24)
+```
+
+The Hub Virtual Network uses the `10.100.0.0/16` address space.
+
+The project intentionally standardizes on `/24` subnets for readability, operational simplicity, and future expansion. Although Azure commonly recommends a smaller subnet for `GatewaySubnet`, the available `/16` address space provides ample capacity, making a consistent addressing scheme more valuable than conserving IP addresses.
+
+---
+
+## Repository Structure
 
 ```text
 AzureLandingZone/
@@ -55,7 +72,7 @@ AzureLandingZone/
 
 ---
 
-# Repository Design
+## Repository Design
 
 The repository follows a simple architectural rule:
 
@@ -91,7 +108,7 @@ Modules should never assume where they are being deployed. They simply create in
 
 ---
 
-# Terraform State Strategy
+## Terraform State Strategy
 
 Terraform state will be stored in the **Management** subscription.
 
@@ -102,7 +119,7 @@ bootstrap.tfstate
 management-groups.tfstate
 platform-management.tfstate
 platform-connectivity.tfstate
-landingzone-development.tfstate
+landing-zone-development.tfstate
 ```
 
 Benefits of separating state:
@@ -115,7 +132,7 @@ Benefits of separating state:
 
 ---
 
-# Bootstrap Strategy
+## Bootstrap Strategy
 
 The bootstrap deployment is responsible for creating the Terraform backend.
 
@@ -129,7 +146,7 @@ Once complete, all remaining deployments will use the remote backend.
 
 ---
 
-# Engineering Principles
+## Engineering Principles
 
 This project follows the following principles:
 
@@ -143,7 +160,7 @@ This project follows the following principles:
 - Documentation before implementation
 - Be explicit when it improves safety
 
-## Terraform Naming Convention
+### Terraform Naming Convention
 
 Terraform resource names describe the **role** of the resource rather than the Azure resource type or implementation detail.
 
@@ -173,27 +190,27 @@ The goal is to make Terraform code read naturally and clearly communicate the pu
 
 ---
 
-# Current Design Decisions
+## Current Design Decisions
 
-## Decision 001
+### Decision 001
 
 Terraform remote state will be hosted in the **Management** subscription.
 
 ---
 
-## Decision 002
+### Decision 002
 
 Management Groups are deployed independently and are **not** part of the bootstrap deployment.
 
 ---
 
-## Decision 003
+### Decision 003
 
 Each major deployment owns its own Terraform state.
 
 ---
 
-## Decision 004
+### Decision 004
 
 The initial landing zone consists of:
 
@@ -202,19 +219,19 @@ Tenant Root
 ├── Platform
 │   ├── Management
 │   └── Connectivity
-└── LandingZones
+└── Landing Zones
     └── Development
 ```
 
 ---
 
-## Decision 005
+### Decision 005
 
 An Identity subscription is intentionally omitted from the initial implementation. Microsoft Entra ID is tenant-wide and a dedicated Identity subscription is unnecessary for the current scope.
 
 ---
 
-## Decision 006
+### Decision 006
 
 Modules define reusable infrastructure.
 
@@ -222,7 +239,19 @@ Deployments consume modules and own the resulting infrastructure.
 
 ---
 
-# Future Enhancements
+### Decision 007
+
+Terraform resource names should describe the **role** of the resource (for example, `backend`, `hub`, `monitoring`) rather than generic or implementation-specific names.
+
+---
+
+### Decision 008
+
+The bootstrap deployment owns only the Terraform backend infrastructure (Resource Group, Storage Account, and Blob Container). All other Azure resources are deployed by their respective deployments.
+
+---
+
+## Future Enhancements
 
 Possible future additions include:
 
@@ -262,16 +291,6 @@ Automation / Pipeline  -> Managed Identity / Workload Identity
 - Commit one logical change at a time with clear commit messages.
 
 ---
-
-## Decision 007
-
-Terraform resource names should describe the **role** of the resource (for example, `backend`, `hub`, `monitoring`) rather than generic or implementation-specific names.
-
----
-
-## Decision 008
-
-The bootstrap deployment owns only the Terraform backend infrastructure (Resource Group, Storage Account, and Blob Container). All other Azure resources are deployed by their respective deployments.
 
 ## Cost Philosophy
 
