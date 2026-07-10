@@ -176,3 +176,45 @@ Every module README should follow the standard structure:
 - Terraform State
 
 Module documentation should describe the module's responsibilities, deployment process, and Terraform state management while maintaining a consistent format across the repository.
+
+### Root Module Initialization
+
+Create new Terraform root modules using the following workflow:
+
+1. Create the module directory.
+2. Create the standard Terraform files:
+   - `backend.tf.example`
+   - `main.tf`
+   - `outputs.tf`
+   - `providers.tf`
+   - `README.md`
+   - `terraform.tfvars.example`
+   - `variables.tf`
+   - `versions.tf`
+3. Populate:
+   - `README.md`
+   - `backend.tf.example`
+   - `versions.tf`
+   - `providers.tf`
+   - `variables.tf`
+   - `terraform.tfvars.example`
+4. Copy:
+   - `backend.tf.example` → `backend.tf`
+   - `terraform.tfvars.example` → `terraform.tfvars`
+5. Populate the local configuration files with environment-specific values.
+6. Initialize the Terraform working directory:
+
+   ```bash
+   terraform init
+   ```
+
+7. Begin implementing the infrastructure one representative resource at a time.
+8. Validate changes using:
+
+   ```bash
+   terraform fmt
+   terraform validate
+   terraform plan
+   ```
+
+This workflow establishes a consistent foundation for every Terraform root module before infrastructure implementation begins.
