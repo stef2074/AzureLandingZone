@@ -45,3 +45,10 @@ resource "azurerm_subnet_route_table_association" "development" {
   subnet_id      = azurerm_subnet.development.id
   route_table_id = azurerm_route_table.development.id
 }
+
+resource "azurerm_virtual_network_peering" "development_to_hub" {
+  name                      = var.development_to_hub_peering_name
+  resource_group_name       = azurerm_resource_group.development.name
+  virtual_network_name      = azurerm_virtual_network.development.name
+  remote_virtual_network_id = data.azurerm_virtual_network.hub.id
+}
