@@ -40,3 +40,8 @@ resource "azurerm_subnet_network_security_group_association" "development" {
   subnet_id                 = azurerm_subnet.development.id
   network_security_group_id = azurerm_network_security_group.development.id
 }
+
+resource "azurerm_subnet_route_table_association" "development" {
+  subnet_id      = azurerm_subnet.development.id
+  route_table_id = azurerm_route_table.development.id
+}
