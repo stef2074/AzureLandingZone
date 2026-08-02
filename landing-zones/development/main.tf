@@ -16,3 +16,10 @@ resource "azurerm_virtual_network" "development" {
   location            = azurerm_resource_group.development.location
   resource_group_name = azurerm_resource_group.development.name
 }
+
+resource "azurerm_subnet" "development" {
+  name                 = var.development_subnet_name
+  resource_group_name  = azurerm_resource_group.development.name
+  virtual_network_name = azurerm_virtual_network.development.name
+  address_prefixes     = [var.development_subnet_address_prefix]
+}
