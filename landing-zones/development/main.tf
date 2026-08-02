@@ -35,3 +35,8 @@ resource "azurerm_route_table" "development" {
   location            = azurerm_resource_group.development.location
   resource_group_name = azurerm_resource_group.development.name
 }
+
+resource "azurerm_subnet_network_security_group_association" "development" {
+  subnet_id                 = azurerm_subnet.development.id
+  network_security_group_id = azurerm_network_security_group.development.id
+}
