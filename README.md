@@ -27,13 +27,12 @@ This repository is under active development. Features are implemented incrementa
 - Repository structure
 - Azure Management Group hierarchy
 - Azure subscription placement
+- Platform Connectivity
 
 ### Planned
 
-- Platform Connectivity
+- Development Landing Zone
 - Shared Services
-- Networking
-- Landing Zones
 - Monitoring
 - Governance
 
@@ -44,9 +43,12 @@ AzureLandingZone/
 ├── bootstrap/            Terraform backend bootstrap
 ├── docs/                 Architecture and engineering documentation
 ├── landing-zones/        Landing Zone deployments
+│   └── development/	  Development landing zone
 ├── management-groups/    Management Group hierarchy
 ├── modules/              Reusable Terraform modules
 ├── platform/             Platform infrastructure
+│   ├── connectivity/	  Hub networking
+│   └── management/	  Shared management resources
 ├── scripts/              Automation scripts
 └── shared/               Shared configuration
 ```

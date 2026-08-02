@@ -1,0 +1,19 @@
+development_subscription_id  = "<DEVELOPMENT_SUBSCRIPTION_ID>"
+connectivity_subscription_id = "<CONNECTIVITY_SUBSCRIPTION_ID>"
+location                     = "eastus2"
+resource_group_name          = "rg-development"
+
+connectivity_resource_group_name = "rg-connectivity"
+hub_virtual_network_name         = "vnet-hub"
+
+hub_to_development_peering_name = "peer-hub-to-development"
+development_to_hub_peering_name = "peer-development-to-hub"
+
+virtual_network_name          = "vnet-development"
+virtual_network_address_space = "10.110.0.0/16"
+
+development_subnet_name           = "DevelopmentSubnet"
+development_subnet_address_prefix = "10.110.0.0/24"
+
+network_security_group_name = "nsg-development"
+route_table_name            = "rt-development"
