@@ -52,3 +52,12 @@ resource "azurerm_virtual_network_peering" "development_to_hub" {
   virtual_network_name      = azurerm_virtual_network.development.name
   remote_virtual_network_id = data.azurerm_virtual_network.hub.id
 }
+
+resource "azurerm_virtual_network_peering" "hub_to_development" {
+  provider = azurerm.connectivity
+
+  name                      = var.hub_to_development_peering_name
+  resource_group_name       = var.connectivity_resource_group_name
+  virtual_network_name      = data.azurerm_virtual_network.hub.name
+  remote_virtual_network_id = azurerm_virtual_network.development.id
+}
