@@ -18,6 +18,7 @@ backend.tf
 # IDEs
 .vscode/
 .idea/
+*.code-workspace
 
 # OS
 .DS_Store

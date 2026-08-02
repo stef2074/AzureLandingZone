@@ -251,6 +251,19 @@ The bootstrap deployment owns only the Terraform backend infrastructure (Resourc
 
 ---
 
+### Decision 009
+
+Landing Zone deployments discover Platform resources using Azure data sources and environment-specific variables rather than Terraform remote state.
+
+Rationale:
+
+- Preserves the independence of Terraform state files.
+- Reduces coupling between deployments.
+- Follows the project's configuration management principles by supplying environment-specific values through variables.
+- Treats Platform resources as existing Azure infrastructure rather than implementation details of another Terraform deployment.
+
+---
+
 ## Future Enhancements
 
 Possible future additions include:
