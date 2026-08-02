@@ -28,10 +28,10 @@ This repository is under active development. Features are implemented incrementa
 - Azure Management Group hierarchy
 - Azure subscription placement
 - Platform Connectivity
+- Development Landing Zone
 
 ### Planned
 
-- Development Landing Zone
 - Shared Services
 - Monitoring
 - Governance
