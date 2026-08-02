@@ -9,3 +9,10 @@ resource "azurerm_resource_group" "development" {
   name     = var.resource_group_name
   location = var.location
 }
+
+resource "azurerm_virtual_network" "development" {
+  name                = var.virtual_network_name
+  address_space       = [var.virtual_network_address_space]
+  location            = azurerm_resource_group.development.location
+  resource_group_name = azurerm_resource_group.development.name
+}
