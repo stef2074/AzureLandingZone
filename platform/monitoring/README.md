@@ -2,19 +2,19 @@
 
 ## Purpose
 
-Deploys the Azure Landing Zone Monitoring Foundation using Terraform.
+Deploys the Azure Landing Zone monitoring foundation using Terraform.
 
-The Monitoring deployment provisions the foundational monitoring infrastructure within the Management subscription and centralizes Activity Logs from the Management, Connectivity, and Development subscriptions into a shared Log Analytics Workspace. This deployment establishes the foundation for future monitoring, alerting, governance, and security capabilities.
+The monitoring deployment provisions the foundational monitoring infrastructure within the Management subscription and centralizes activity logs from the Management, Connectivity, and Development subscriptions into a shared log analytics workspace. This deployment establishes the foundation for future monitoring, alerting, governance, and security capabilities.
 
 ## Resources
 
 This deployment manages the following Azure resources:
 
-- Monitoring Resource Group
-- Log Analytics Workspace
-- Management subscription Activity Log diagnostic setting
-- Connectivity subscription Activity Log diagnostic setting
-- Development subscription Activity Log diagnostic setting
+- Monitoring resource group
+- Log analytics workspace
+- Management subscription activity log diagnostic setting
+- Connectivity subscription activity log diagnostic setting
+- Development subscription activity log diagnostic setting
 
 ## Prerequisites
 
@@ -42,8 +42,8 @@ terraform apply
 After deployment:
 
 - The `rg-monitoring` resource group exists within the Management subscription.
-- The `law-monitoring` Log Analytics Workspace exists within the Monitoring Resource Group.
-- Activity Logs from the Management subscription are forwarded to the Log Analytics Workspace.
-- Activity Logs from the Connectivity subscription are forwarded to the Log Analytics Workspace.
-- Activity Logs from the Development subscription are forwarded to the Log Analytics Workspace.
+- The `law-monitoring` log analytics workspace exists within the monitoring resource group.
+- Activity logs from the Management subscription are forwarded to the log analytics workspace.
+- Activity logs from the Connectivity subscription are forwarded to the log analytics workspace.
+- Activity logs from the Development subscription are forwarded to the log analytics workspace.
 - `terraform plan` reports no infrastructure changes after deployment.

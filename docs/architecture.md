@@ -48,6 +48,24 @@ The project intentionally standardizes on `/24` subnets for readability, operati
 
 ---
 
+## Platform Monitoring
+
+The Management subscription hosts the monitoring foundation for the Azure Landing Zone.
+
+```text
+Management Subscription
+└── Monitoring
+    ├── Resource group
+    ├── Log analytics workspace
+    ├── Management activity logs
+    ├── Connectivity activity logs
+    └── Development activity logs
+```
+
+The monitoring deployment centralizes activity logs from the Management, Connectivity, and Development subscriptions into a shared log analytics workspace. This foundation supports future monitoring, alerting, governance, and security capabilities.
+
+---
+
 ## Repository Structure
 
 ```text
