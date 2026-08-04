@@ -15,6 +15,18 @@ data "azurerm_subscription" "management" {
   subscription_id = var.management_subscription_id
 }
 
+data "azurerm_subscription" "connectivity" {
+  provider = azurerm.connectivity
+
+  subscription_id = var.connectivity_subscription_id
+}
+
+# data "azurerm_subscription" "development" {
+#   provider = azurerm.development
+
+#   subscription_id = var.development_subscription_id
+# }
+
 resource "azurerm_monitor_diagnostic_setting" "management_activity_log" {
   name                       = var.management_activity_log_diagnostic_setting_name
   target_resource_id         = data.azurerm_subscription.management.id
@@ -24,3 +36,27 @@ resource "azurerm_monitor_diagnostic_setting" "management_activity_log" {
     category_group = "allLogs"
   }
 }
+
+resource "azurerm_monitor_diagnostic_setting" "connectivity_activity_log" {
+  provider = azurerm.connectivity
+
+  name                       = var.connectivity_activity_log_diagnostic_setting_name
+  target_resource_id         = data.azurerm_subscription.connectivity.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.monitoring.id
+
+  enabled_log {
+    category_group = "allLogs"
+  }
+}
+
+# resource "azurerm_monitor_diagnostic_setting" "development_activity_log" {
+#   provider = azurerm.development
+
+#   name                       = var.development_activity_log_diagnostic_setting_name
+#   target_resource_id         = data.azurerm_subscription.development.id
+#   log_analytics_workspace_id = azurerm_log_analytics_workspace.monitoring.id
+
+#   enabled_log {
+#     category_group = "allLogs"
+#   }
+# }
