@@ -1,0 +1,14 @@
+management_subscription_id   = "<MANAGEMENT_SUBSCRIPTION_ID>"
+connectivity_subscription_id = "<CONNECTIVITY_SUBSCRIPTION_ID>"
+development_subscription_id  = "<DEVELOPMENT_SUBSCRIPTION_ID>"
+
+location            = "eastus2"
+resource_group_name = "rg-monitoring"
+
+log_analytics_workspace_name              = "law-monitoring"
+log_analytics_workspace_sku               = "PerGB2018"
+log_analytics_workspace_retention_in_days = 30
+
+management_activity_log_diagnostic_setting_name   = "ds-management-activity-log"
+connectivity_activity_log_diagnostic_setting_name = "ds-connectivity-activity-log"
+development_activity_log_diagnostic_setting_name  = "ds-development-activity-log"

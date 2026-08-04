@@ -177,6 +177,29 @@ Every module README should follow the standard structure:
 
 Module documentation should describe the module's responsibilities, deployment process, and Terraform state management while maintaining a consistent format across the repository.
 
+### Variable Documentation
+
+Terraform variable descriptions should use consistent wording and formatting throughout the repository.
+
+Follow these conventions:
+
+- Use lowercase for Azure resource types and general terms.
+- Capitalize only Azure Landing Zone subscription names (Management, Connectivity, and Development).
+- Use consistent wording for similar variables.
+- Prefer concise descriptions that describe the purpose of the variable rather than its implementation.
+
+Examples:
+
+```hcl
+description = "Azure subscription id used for the Management subscription."
+
+description = "Name of the resource group used for monitoring resources."
+
+description = "Azure region where monitoring resources are deployed."
+
+description = "Name of the Management subscription activity log diagnostic setting."
+```
+
 ### Root Module Initialization
 
 Create new Terraform root modules using the following workflow:
@@ -208,7 +231,7 @@ Create new Terraform root modules using the following workflow:
    terraform init
    ```
 
-7. Begin implementing the infrastructure one representative resource at a time.
+7. Begin implementing the infrastructure one representative resource or implementation pattern at a time.
 8. Validate changes using:
 
    ```bash
