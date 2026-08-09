@@ -27,3 +27,13 @@ variable "app_service_plan_sku_name" {
   description = "SKU used by the App Service Plan."
   type        = string
 }
+
+variable "app_service_name" {
+  description = "Name of the App Service used for the JobAssistant application."
+  type        = string
+}
+
+variable "app_service_dotnet_version" {
+  description = "Version of .NET used by the App Service."
+  type        = string
+}
