@@ -55,14 +55,14 @@ The Management subscription hosts the monitoring foundation for the Azure Landin
 ```text
 Management Subscription
 └── Monitoring
-    ├── Resource group
-    ├── Log analytics workspace
-    ├── Management activity logs
-    ├── Connectivity activity logs
-    └── Development activity logs
+    ├── Resource Group
+    ├── Log Analytics Workspace
+    ├── Management Activity Logs
+    ├── Connectivity Activity Logs
+    └── Development Activity Logs
 ```
 
-The monitoring deployment centralizes activity logs from the Management, Connectivity, and Development subscriptions into a shared log analytics workspace. This foundation supports future monitoring, alerting, governance, and security capabilities.
+The monitoring deployment centralizes Activity Logs from the Management, Connectivity, and Development subscriptions into a shared Log Analytics Workspace. This foundation supports future monitoring, alerting, governance, and security capabilities.
 
 ---
 
@@ -77,7 +77,8 @@ AzureLandingZone/
 │
 ├── platform/
 │   ├── management/
-│   └── connectivity/
+│   ├── connectivity/
+│   └── monitoring/
 │
 ├── landing-zones/
 │   └── development/
@@ -110,7 +111,9 @@ Examples:
 - management-groups
 - platform/management
 - platform/connectivity
+- platform/monitoring
 - landing-zones/development
+- applications/jobassistant/development
 
 ### Applications
 
@@ -159,7 +162,9 @@ bootstrap.tfstate
 management-groups.tfstate
 platform-management.tfstate
 platform-connectivity.tfstate
+platform-monitoring.tfstate
 landing-zone-development.tfstate
+application-jobassistant-development.tfstate
 ```
 
 Benefits of separating state:
