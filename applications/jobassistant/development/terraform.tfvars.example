@@ -1,0 +1,4 @@
+development_subscription_id = "<DEVELOPMENT_SUBSCRIPTION_ID>"
+
+location            = "eastus2"
+resource_group_name = "rg-jobassistant-dev"
