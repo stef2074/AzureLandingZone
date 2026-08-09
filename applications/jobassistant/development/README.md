@@ -11,14 +11,21 @@ The following resources are managed by this module:
 - Resource Group
 - App Service Plan
 - App Service
+- App Service Diagnostic Setting
 
 Future application resources, such as Azure SQL Database, Storage Accounts, Key Vault, Application Insights, and networking integrations, are intentionally managed separately and are not created by this module.
+
+### Monitoring Integration
+
+The App Service Diagnostic Setting sends HTTP, console, and platform logs to the centralized Log Analytics Workspace in the Management subscription.
+
+The Log Analytics Workspace is managed by the Monitoring Foundation and is discovered by this module using the Management subscription provider.
 
 ## Prerequisites
 
 Before running Terraform:
 
-- Ensure your Azure account has the required permissions for the Development subscription.
+- Ensure your Azure account has the required permissions for the Development and Management subscriptions.
 - Authenticate to Azure:
 
 ```bash
