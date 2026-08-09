@@ -1,4 +1,5 @@
 development_subscription_id = "<DEVELOPMENT_SUBSCRIPTION_ID>"
+management_subscription_id  = "<MANAGEMENT_SUBSCRIPTION_ID>"
 resource_group_name         = "rg-jobassistant-dev"
 location                    = "eastus2"
 
@@ -7,3 +8,6 @@ app_service_plan_os_type   = "Linux"
 app_service_plan_sku_name  = "F1"
 app_service_name           = "app-jobassistant-dev"
 app_service_dotnet_version = "10.0"
+
+monitoring_resource_group_name = "rg-monitoring"
+log_analytics_workspace_name   = "law-monitoring"

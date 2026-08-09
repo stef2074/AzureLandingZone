@@ -3,8 +3,18 @@ variable "development_subscription_id" {
   type        = string
 }
 
+variable "management_subscription_id" {
+  description = "Azure subscription ID used for the Management subscription."
+  type        = string
+}
+
 variable "resource_group_name" {
   description = "Name of the Resource Group used for the JobAssistant application."
+  type        = string
+}
+
+variable "monitoring_resource_group_name" {
+  description = "Name of the Resource Group used for monitoring resources."
   type        = string
 }
 
@@ -35,5 +45,10 @@ variable "app_service_name" {
 
 variable "app_service_dotnet_version" {
   description = "Version of .NET used by the App Service."
+  type        = string
+}
+
+variable "log_analytics_workspace_name" {
+  description = "Name of the Log Analytics Workspace."
   type        = string
 }
