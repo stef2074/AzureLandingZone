@@ -55,14 +55,14 @@ The Management subscription hosts the monitoring foundation for the Azure Landin
 ```text
 Management Subscription
 └── Monitoring
-    ├── Resource group
-    ├── Log analytics workspace
-    ├── Management activity logs
-    ├── Connectivity activity logs
-    └── Development activity logs
+    ├── Resource Group
+    ├── Log Analytics Workspace
+    ├── Management Activity Logs
+    ├── Connectivity Activity Logs
+    └── Development Activity Logs
 ```
 
-The monitoring deployment centralizes activity logs from the Management, Connectivity, and Development subscriptions into a shared log analytics workspace. This foundation supports future monitoring, alerting, governance, and security capabilities.
+The monitoring deployment centralizes Activity Logs from the Management, Connectivity, and Development subscriptions into a shared Log Analytics Workspace. This foundation supports future monitoring, alerting, governance, and security capabilities.
 
 ---
 
@@ -77,10 +77,15 @@ AzureLandingZone/
 │
 ├── platform/
 │   ├── management/
-│   └── connectivity/
+│   ├── connectivity/
+│   └── monitoring/
 │
 ├── landing-zones/
 │   └── development/
+│
+├── applications/
+│   └── jobassistant/
+│       └── development/
 │
 ├── modules/
 ├── shared/
@@ -106,7 +111,27 @@ Examples:
 - management-groups
 - platform/management
 - platform/connectivity
+- platform/monitoring
 - landing-zones/development
+- applications/jobassistant/development
+
+### Applications
+
+Application deployments represent independently managed workloads deployed into landing zone subscriptions.
+
+Each application environment is managed as its own Terraform root module and maintains its own Terraform state.
+
+Example:
+
+```text
+applications/
+└── jobassistant/
+    └── development/
+```
+
+Application deployments own application-specific infrastructure such as Resource Groups, App Service Plans, App Services, databases, and other workload resources.
+
+Landing Zone deployments provide the foundational infrastructure required by applications but do not own application resources.
 
 ### Modules
 
@@ -137,7 +162,9 @@ bootstrap.tfstate
 management-groups.tfstate
 platform-management.tfstate
 platform-connectivity.tfstate
+platform-monitoring.tfstate
 landing-zone-development.tfstate
+application-jobassistant-development.tfstate
 ```
 
 Benefits of separating state:
@@ -279,6 +306,16 @@ Rationale:
 - Reduces coupling between deployments.
 - Follows the project's configuration management principles by supplying environment-specific values through variables.
 - Treats Platform resources as existing Azure infrastructure rather than implementation details of another Terraform deployment.
+
+---
+
+### Decision 010
+
+Application workloads are managed independently from Landing Zone infrastructure.
+
+Application deployments are stored under the `applications/` directory and use separate Terraform root modules and state files for each application environment.
+
+This separation preserves independent lifecycles between foundational Landing Zone infrastructure and application workloads.
 
 ---
 
