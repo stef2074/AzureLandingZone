@@ -28,29 +28,37 @@ This repository is under active development. Features are implemented incrementa
 - Azure Management Group hierarchy
 - Azure subscription placement
 - Platform Connectivity
+- Monitoring Foundation
 - Development Landing Zone
+- JobAssistant App Service infrastructure and centralized logging
 
 ### Planned
 
+- JobAssistant GitHub Actions OIDC authentication
+- JobAssistant GitHub Actions CI/CD deployment workflow
 - Shared Services
-- Monitoring
 - Governance
 
 ## Repository Structure
 
 ```text
 AzureLandingZone/
-├── bootstrap/            Terraform backend bootstrap
-├── docs/                 Architecture and engineering documentation
-├── landing-zones/        Landing Zone deployments
-│   └── development/	  Development landing zone
-├── management-groups/    Management Group hierarchy
-├── modules/              Reusable Terraform modules
-├── platform/             Platform infrastructure
-│   ├── connectivity/	  Hub networking
-│   └── management/	  Shared management resources
-├── scripts/              Automation scripts
-└── shared/               Shared configuration
+├── applications/          Application workload deployments
+│   └── jobassistant/
+│       ├── development/    JobAssistant Development infrastructure
+│       └── github-oidc/    JobAssistant GitHub Actions OIDC authentication
+├── bootstrap/             Terraform backend bootstrap
+├── docs/                  Architecture and engineering documentation
+├── landing-zones/         Landing Zone deployments
+│   └── development/       Development Landing Zone
+├── management-groups/     Management Group hierarchy
+├── modules/               Reusable Terraform modules
+├── platform/              Platform infrastructure
+│   ├── connectivity/      Hub networking
+│   ├── management/        Shared management resources
+│   └── monitoring/        Centralized monitoring foundation
+├── scripts/               Automation scripts
+└── shared/                Shared configuration
 ```
 
 ## Technologies
@@ -58,8 +66,10 @@ AzureLandingZone/
 - Terraform
 - Microsoft Azure
 - Azure CLI
+- Microsoft Entra ID
 - Git
 - GitHub
+- GitHub Actions
 
 ## Documentation
 
