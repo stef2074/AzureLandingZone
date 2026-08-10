@@ -2,3 +2,6 @@ tenant_id                   = "<MICROSOFT_ENTRA_TENANT_ID>"
 development_subscription_id = "<DEVELOPMENT_SUBSCRIPTION_ID>"
 
 github_actions_application_name = "app-jobassistant-github-actions"
+github_repository_owner         = "stef2074"
+github_repository_name          = "JobAssistant"
+github_environment_name         = "development"
