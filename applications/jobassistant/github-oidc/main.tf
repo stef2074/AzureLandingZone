@@ -18,3 +18,9 @@ resource "azuread_application_federated_identity_credential" "jobassistant_githu
 data "azurerm_resource_group" "jobassistant" {
   name = var.jobassistant_resource_group_name
 }
+
+resource "azurerm_role_assignment" "jobassistant_github_actions" {
+  scope                = data.azurerm_resource_group.jobassistant.id
+  role_definition_name = "Website Contributor"
+  principal_id         = azuread_service_principal.jobassistant_github_actions.object_id
+}
