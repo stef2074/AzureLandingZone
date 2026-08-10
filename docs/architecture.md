@@ -26,7 +26,7 @@ Tenant Root
 | Subscription | Purpose |
 |---------------|---------|
 | Management | Terraform state, monitoring, logging, shared platform services |
-| Connectivity | Hub networking, Private DNS, routing, future Firewall/VPN/Bastion |
+| Connectivity | Hub networking, Private DNS, routing, future Azure Firewall, VPN Gateway, and Azure Bastion |
 | Development | Development workloads and spoke networking |
 
 ---
@@ -85,7 +85,8 @@ AzureLandingZone/
 │
 ├── applications/
 │   └── jobassistant/
-│       └── development/
+│       ├── development/
+│       └── github-oidc/
 │
 ├── modules/
 ├── shared/
@@ -114,22 +115,24 @@ Examples:
 - platform/monitoring
 - landing-zones/development
 - applications/jobassistant/development
+- applications/jobassistant/github-oidc
 
 ### Applications
 
-Application deployments represent independently managed workloads deployed into landing zone subscriptions.
+Application deployments represent independently managed application workloads and supporting infrastructure.
 
-Each application environment is managed as its own Terraform root module and maintains its own Terraform state.
+Each application deployment is managed as its own Terraform root module and maintains its own Terraform state.
 
 Example:
 
 ```text
 applications/
 └── jobassistant/
-    └── development/
+    ├── development/
+    └── github-oidc/
 ```
 
-Application deployments own application-specific infrastructure such as Resource Groups, App Service Plans, App Services, databases, and other workload resources.
+Application deployments own application-specific infrastructure such as Resource Groups, App Service Plans, App Services, databases, workload identities, deployment authentication, and other workload resources.
 
 Landing Zone deployments provide the foundational infrastructure required by applications but do not own application resources.
 
@@ -142,8 +145,8 @@ Examples:
 - Resource Groups
 - Virtual Networks
 - Network Security Groups
-- Key Vault
-- Log Analytics
+- Azure Key Vault
+- Log Analytics Workspace
 - Storage Accounts
 - Role Assignments
 
@@ -165,6 +168,7 @@ platform-connectivity.tfstate
 platform-monitoring.tfstate
 landing-zone-development.tfstate
 application-jobassistant-development.tfstate
+application-jobassistant-github-oidc.tfstate
 ```
 
 Benefits of separating state:
@@ -313,9 +317,27 @@ Rationale:
 
 Application workloads are managed independently from Landing Zone infrastructure.
 
-Application deployments are stored under the `applications/` directory and use separate Terraform root modules and state files for each application environment.
+Application deployments are stored under the `applications/` directory and use separate Terraform root modules and state files for each application deployment.
 
 This separation preserves independent lifecycles between foundational Landing Zone infrastructure and application workloads.
+
+---
+
+### Decision 011
+
+GitHub Actions authentication for JobAssistant uses Microsoft Entra Workload Identity Federation with OpenID Connect (OIDC) rather than long-lived client secrets or App Service publish profiles.
+
+A dedicated Microsoft Entra application and service principal establish the deployment identity. A federated identity credential restricts trust to the intended JobAssistant GitHub repository and deployment environment. Azure RBAC grants only the permissions required for deployment.
+
+The OIDC authentication infrastructure is managed as an independent Terraform deployment under `applications/jobassistant/github-oidc/` and maintains its own Terraform state.
+
+Rationale:
+
+- Eliminates long-lived Azure credentials from GitHub.
+- Uses short-lived tokens issued for individual GitHub Actions workflow jobs.
+- Limits the trust relationship to the intended repository and deployment environment.
+- Keeps deployment authentication infrastructure independent from the JobAssistant application hosting infrastructure.
+- Establishes the authentication foundation for future JobAssistant CI/CD workflows.
 
 ---
 
@@ -329,10 +351,10 @@ Possible future additions include:
 - Azure Bastion
 - VPN Gateway
 - Azure Policy
-- Azure Budgeting
+- Azure Cost Management budgets
 - Defender for Cloud
-- GitHub Actions CI/CD
-- Azure DevOps Pipeline
+- JobAssistant GitHub Actions CI/CD deployment workflow
+- Azure DevOps pipeline
 
 ---
 
@@ -340,14 +362,39 @@ Possible future additions include:
 
 Initial local Terraform execution uses Azure CLI authentication.
 
-Future automated deployments should use Managed Identity or Workload Identity Federation instead of long-lived credentials.
+Automated deployments should use Managed Identity or Workload Identity Federation instead of long-lived credentials.
+
+JobAssistant GitHub Actions authentication uses Microsoft Entra Workload Identity Federation with OpenID Connect (OIDC). GitHub Actions requests a short-lived OIDC token, Microsoft Entra ID validates the configured federated trust, and Azure authorizes the resulting workload identity through Azure RBAC.
 
 Authentication strategy:
 
 ```text
-Local Development      -> Azure CLI authentication
-Automation / Pipeline  -> Managed Identity / Workload Identity
+Local Development             -> Azure CLI authentication
+Azure-hosted automation       -> Managed Identity
+GitHub Actions                -> Workload Identity Federation / OIDC
 ```
+
+### JobAssistant GitHub Actions OIDC Authentication
+
+```text
+GitHub Actions
+    │
+    │ OIDC token
+    ▼
+Microsoft Entra ID
+    │
+    │ Federated identity credential
+    ▼
+JobAssistant deployment identity
+    │
+    │ Azure RBAC
+    ▼
+JobAssistant Azure resources
+```
+
+The federated identity credential is restricted to the intended JobAssistant GitHub repository and deployment environment. No Azure client secret or App Service publish profile is required for authentication.
+
+The authentication infrastructure is managed independently under `applications/jobassistant/github-oidc/`. The actual JobAssistant build and deployment workflow is implemented separately from this authentication foundation.
 
 ---
 

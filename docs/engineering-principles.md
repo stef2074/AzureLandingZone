@@ -35,7 +35,7 @@ provider "azurerm" {
 ```
 
 ```hcl
-# Storage account names must be globally unique.
+# Storage Account names must be globally unique.
 name = var.storage_account_name
 ```
 
@@ -99,6 +99,23 @@ location            = var.location
 
 ---
 
+## CI/CD Authentication
+
+Prefer passwordless workload identity for CI/CD authentication.
+
+GitHub Actions should authenticate to Azure using Microsoft Entra Workload Identity Federation with OpenID Connect (OIDC) when supported.
+
+Follow these principles:
+
+- Do not use long-lived Azure client secrets when OIDC federation is available.
+- Do not use App Service publish profiles as the primary deployment authentication mechanism when Azure RBAC and OIDC can be used.
+- Restrict federated trust to the intended GitHub repository and deployment environment.
+- Grant deployment identities only the Azure RBAC permissions required for their responsibility.
+- Manage workload identity and federated credential infrastructure using Terraform.
+- Keep authentication infrastructure independent from application hosting infrastructure when they have separate lifecycles.
+
+---
+
 ## Validation & Deployment
 
 Validate infrastructure before deployment.
@@ -125,12 +142,14 @@ Recommended workflow:
 
 1. Create a Jira feature.
 2. Create a Git feature branch.
-3. Implement the feature.
-4. Validate the Terraform configuration.
-5. Commit using meaningful commit messages that clearly describe the purpose of the change. Use the Jira feature identifier for feature work and descriptive prefixes (for example, `Docs:`, `Fix:`, or `Refactor:`) for non-feature commits.
-6. Merge into `main`.
-7. Push changes to GitHub.
-8. Create Git tags for significant project milestones.
+3. Update the relevant documentation before implementation.
+4. Implement the feature.
+5. Validate the Terraform configuration.
+6. Commit each meaningful logical change using a clear commit message. Use the Jira feature identifier for feature work and descriptive prefixes (for example, `Docs:`, `Fix:`, or `Refactor:`) for non-feature commits.
+7. Push the feature branch to GitHub.
+8. Create and review a pull request.
+9. Merge the pull request into `main`.
+10. Create Git tags for significant project milestones when appropriate.
 
 Commit messages should clearly describe the purpose of the change rather than the files modified.
 
@@ -169,7 +188,7 @@ Each Terraform root module should include a `README.md`.
 
 Every module README should follow the standard structure:
 
-- Purpose
+- Introductory purpose description
 - Resources
 - Prerequisites
 - Deployment
@@ -183,21 +202,22 @@ Terraform variable descriptions should use consistent wording and formatting thr
 
 Follow these conventions:
 
-- Use lowercase for Azure resource types and general terms.
-- Capitalize only Azure Landing Zone subscription names (Management, Connectivity, and Development).
+- Capitalize official Azure resource and service names using Microsoft terminology.
+- Capitalize Azure Landing Zone subscription names (Management, Connectivity, and Development).
+- Use lowercase for general terms that are not official Azure names.
 - Use consistent wording for similar variables.
 - Prefer concise descriptions that describe the purpose of the variable rather than its implementation.
 
 Examples:
 
 ```hcl
-description = "Azure subscription id used for the Management subscription."
+description = "Azure subscription ID used for the Management subscription."
 
-description = "Name of the resource group used for monitoring resources."
+description = "Name of the Resource Group used for monitoring resources."
 
 description = "Azure region where monitoring resources are deployed."
 
-description = "Name of the Management subscription activity log diagnostic setting."
+description = "Name of the Management subscription Activity Log Diagnostic Setting."
 ```
 
 ### Root Module Initialization
