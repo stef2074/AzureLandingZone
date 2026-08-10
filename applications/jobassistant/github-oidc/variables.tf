@@ -27,3 +27,8 @@ variable "github_environment_name" {
   description = "GitHub Environment name used by the federated identity credential."
   type        = string
 }
+
+variable "jobassistant_resource_group_name" {
+  description = "Name of the Resource Group used for the JobAssistant application."
+  type        = string
+}

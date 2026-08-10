@@ -14,3 +14,7 @@ resource "azuread_application_federated_identity_credential" "jobassistant_githu
   issuer         = "https://token.actions.githubusercontent.com"
   subject        = "repo:${var.github_repository_owner}/${var.github_repository_name}:environment:${var.github_environment_name}"
 }
+
+data "azurerm_resource_group" "jobassistant" {
+  name = var.jobassistant_resource_group_name
+}

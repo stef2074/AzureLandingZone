@@ -5,3 +5,5 @@ github_actions_application_name = "app-jobassistant-github-actions"
 github_repository_owner         = "stef2074"
 github_repository_name          = "JobAssistant"
 github_environment_name         = "development"
+
+jobassistant_resource_group_name = "rg-jobassistant-dev"
