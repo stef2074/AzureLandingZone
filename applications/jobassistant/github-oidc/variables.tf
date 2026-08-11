@@ -18,8 +18,18 @@ variable "github_repository_owner" {
   type        = string
 }
 
+variable "github_repository_owner_id" {
+  description = "GitHub repository owner ID used by the federated identity credential."
+  type        = string
+}
+
 variable "github_repository_name" {
   description = "GitHub repository name used by the federated identity credential."
+  type        = string
+}
+
+variable "github_repository_id" {
+  description = "GitHub repository ID used by the federated identity credential."
   type        = string
 }
 
