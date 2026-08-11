@@ -12,7 +12,7 @@ resource "azuread_application_federated_identity_credential" "jobassistant_githu
   description    = "GitHub Actions OIDC federation for the JobAssistant development environment."
   audiences      = ["api://AzureADTokenExchange"]
   issuer         = "https://token.actions.githubusercontent.com"
-  subject        = "repo:${var.github_repository_owner}/${var.github_repository_name}:environment:${var.github_environment_name}"
+  subject        = "repo:${var.github_repository_owner}@${var.github_repository_owner_id}/${var.github_repository_name}@${var.github_repository_id}:environment:${var.github_environment_name}"
 }
 
 data "azurerm_resource_group" "jobassistant" {
