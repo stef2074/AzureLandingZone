@@ -12,7 +12,7 @@ The following resources are managed by this module:
 - Service Principal
 - Federated Identity Credential
 
-The Federated Identity Credential trusts GitHub Actions running in the `development` environment of the `stef2074/JobAssistant` repository.
+The Federated Identity Credential trusts GitHub Actions running in the `development` environment of the `stef2074/JobAssistant` repository. The OIDC subject includes the immutable GitHub repository owner ID and repository ID so that the federated trust remains bound to the intended owner and repository if either is renamed.
 
 ### Authorization
 

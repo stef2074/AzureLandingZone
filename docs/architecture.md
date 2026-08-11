@@ -327,7 +327,7 @@ This separation preserves independent lifecycles between foundational Landing Zo
 
 GitHub Actions authentication for JobAssistant uses Microsoft Entra Workload Identity Federation with OpenID Connect (OIDC) rather than long-lived client secrets or App Service publish profiles.
 
-A dedicated Microsoft Entra application and service principal establish the deployment identity. A federated identity credential restricts trust to the intended JobAssistant GitHub repository and deployment environment. Azure RBAC grants only the permissions required for deployment.
+A dedicated Microsoft Entra application and service principal establish the deployment identity. A federated identity credential restricts trust to the intended JobAssistant GitHub repository and deployment environment. The OIDC subject includes the immutable GitHub repository owner ID and repository ID so that the federated trust remains bound to the intended owner and repository if either is renamed. Azure RBAC grants only the permissions required for deployment.
 
 The OIDC authentication infrastructure is managed as an independent Terraform deployment under `applications/jobassistant/github-oidc/` and maintains its own Terraform state.
 
@@ -335,7 +335,7 @@ Rationale:
 
 - Eliminates long-lived Azure credentials from GitHub.
 - Uses short-lived tokens issued for individual GitHub Actions workflow jobs.
-- Limits the trust relationship to the intended repository and deployment environment.
+- Limits the trust relationship to the intended repository and deployment environment using immutable GitHub owner and repository identifiers.
 - Keeps deployment authentication infrastructure independent from the JobAssistant application hosting infrastructure.
 - Establishes the authentication foundation for future JobAssistant CI/CD workflows.
 
