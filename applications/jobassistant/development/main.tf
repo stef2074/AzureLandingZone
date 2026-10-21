@@ -24,6 +24,10 @@ resource "azurerm_linux_web_app" "jobassistant" {
       dotnet_version = var.app_service_dotnet_version
     }
   }
+
+  app_settings = {
+    ConnectionStrings__JobAssistant = "Data Source=${var.app_service_sqlite_database_path}"
+  }
 }
 
 data "azurerm_log_analytics_workspace" "monitoring" {

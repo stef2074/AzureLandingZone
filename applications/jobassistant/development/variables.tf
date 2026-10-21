@@ -48,6 +48,11 @@ variable "app_service_dotnet_version" {
   type        = string
 }
 
+variable "app_service_sqlite_database_path" {
+  description = "Persistent SQLite database path used by the JobAssistant App Service."
+  type        = string
+}
+
 variable "log_analytics_workspace_name" {
   description = "Name of the Log Analytics Workspace."
   type        = string
